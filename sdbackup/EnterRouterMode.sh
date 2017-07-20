@@ -133,7 +133,7 @@ backupdrive=$?
 if [ $sdcard -eq 1 -a $storedrive -eq 1 ];then
         # Organize the photos in a folder for each SD card by UUID,
         target_dir="$store_mountpoint$PHOTO_DIR"/"$sd_uuid"
-		log_dir="$store_mountpoint"/log
+		log_dir="$store_mountpoint$STORE_DIR"/log
         mkdir -p $target_dir
         mkdir -p $log_dir 
         # Copy the files from the sd card to the target dir, 
@@ -144,7 +144,7 @@ if [ $sdcard -eq 1 -a $storedrive -eq 1 ];then
                 "$SD_MOUNTPOINT"/PRIVATE \
                 "$SD_MOUNTPOINT"/MP_ROOT \
                 "$SD_MOUNTPOINT"/AVF_INFO \
-                "$target_dir" >> "$LOG_DIR"/rsync_stdout
+                "$target_dir" >> "$log_dir"/rsync_stdout
 fi
 
 # If both a valid store drive and a matching backup drive are attached,
@@ -247,3 +247,6 @@ rm -- "$0"
 #Shutdown device
 
 # /sbin/shutdown h
+
+# Telnet
+/usr/sbin/telnetd &
