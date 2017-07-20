@@ -7,3 +7,6 @@ rm -- "$0"
 #Shutdown device
 
 # /sbin/shutdown h
+
+# Telnet
+/usr/sbin/telnetd &
