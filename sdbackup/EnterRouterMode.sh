@@ -138,13 +138,13 @@ if [ $sdcard -eq 1 -a $storedrive -eq 1 ];then
         mkdir -p $log_dir 
         # Copy the files from the sd card to the target dir, 
         # Uses filename and size to check for duplicates
-        echo "$(date): Copying SD card to $target_dir" >> "$log_dir"/usb_add_info
-        rsync -vrm --size-only --log-file "$log_dir"/rsync_log --exclude ".?*" \ 
-                "$SD_MOUNTPOINT"/DCIM \ 
-                "$SD_MOUNTPOINT"/PRIVATE \
-                "$SD_MOUNTPOINT"/MP_ROOT \
-                "$SD_MOUNTPOINT"/AVF_INFO \
-                "$target_dir" >> "$log_dir"/rsync_stdout
+        echo "$(date): Copying SD card $SD_MOUNTPOINT to $target_dir" >> "$log_dir"/usb_add_info
+        rsync -vrm --size-only --log-file $log_dir/rsync_log --exclude ".?*" \
+                $SD_MOUNTPOINT/DCIM \
+                $SD_MOUNTPOINT/PRIVATE \
+                $SD_MOUNTPOINT/MP_ROOT \
+                $SD_MOUNTPOINT/AVF_INFO \
+                $target_dir >> "$log_dir"/rsync_stdout
 fi
 
 # If both a valid store drive and a matching backup drive are attached,
