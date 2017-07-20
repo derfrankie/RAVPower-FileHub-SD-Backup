@@ -65,6 +65,7 @@ STORE_DIR=/sdcopies
 BACKUP_DIR=/fotobackup
 PHOTO_DIR="$STORE_DIR"/fotos
 CONFIG_DIR="$STORE_DIR"/config
+LOG_DIR="$STORE_DIR"/log
 #MEDIA_REGEX=".*\.\(jpg\|gif\|png\|jpeg\|mov\|avi\|wav\|mp3\|aif\|wma\|wmv\|asx\|asf\|m4v\|mp4\|mpg\|3gp\|3g2\|crw\|cr2\|nef\|dng\|mdc\|orf\|sr2\|srf\|mts\|rw2\)"
 
 # Check if an SD card is inserted (always mounted at the same mount point on the Rav Filehub)
@@ -134,16 +135,16 @@ if [ $sdcard -eq 1 -a $storedrive -eq 1 ];then
         # Organize the photos in a folder for each SD card by UUID,
         target_dir="$store_mountpoint$PHOTO_DIR"/"$sd_uuid"
         mkdir -p $target_dir
-        mkdir -p "$STORE_DIR"/log
+        mkdir -p $LOG_DIR 
         # Copy the files from the sd card to the target dir, 
         # Uses filename and size to check for duplicates
-        echo "$(date): Copying SD card to $target_dir" >> "$STORE_DIR"/log/usb_add_info
-        rsync -vrm --size-only --log-file /tmp/rsync_log --exclude ".?*" \ 
+        echo "$(date): Copying SD card to $target_dir" >> "$LOG_DIR"/usb_add_info
+        rsync -vrm --size-only --log-file "$LOG_DIR"/rsync_log --exclude ".?*" \ 
                 "$SD_MOUNTPOINT"/DCIM \ 
                 "$SD_MOUNTPOINT"/PRIVATE \
                 "$SD_MOUNTPOINT"/MP_ROOT \
                 "$SD_MOUNTPOINT"/AVF_INFO \
-                "$target_dir"
+                "$target_dir" >> "$LOG_DIR"/rsync_stdout
 fi
 
 # If both a valid store drive and a matching backup drive are attached,
@@ -152,12 +153,12 @@ if [ $storedrive -eq 1 -a $backupdrive -eq 1 -a "$backup_id" == "$store_id" ]; t
         source_dir="$store_mountpoint$STORE_DIR"
         target_dir="$backup_mountpoint$BACKUP_DIR"
         partial_dir="$store_mountpoint$PHOTO_DIR"/incoming/.partial
-        echo "Backing up data store to $target_dir" >> "$STORE_DIR"/log/usb_add_info
-        rsync -vrm --size-only --delete-during --exclude ".?*" --partial-dir "$partial_dir" --exclude "swapfile" --log-file /tmp/rsync_log "$source_dir"/ "$target_dir"
+        echo "Backing up data store to $target_dir" >> "$LOG_DIR"/usb_add_info
+        rsync -vrm --size-only --delete-during --exclude ".?*" --partial-dir "$partial_dir" --exclude "swapfile" --log-file "$LOG_DIR"/rsync_log "$source_dir"/ "$target_dir"
         if  [ $? -eq 0 ]; then
-                echo "$(date): Backup complete" >> "$STORE_DIR"/log/usb_add_info
+                echo "$(date): Backup complete" >> "$LOG_DIR"/usb_add_info
         else
-                echo "$(date): Backup failed" >> "$STORE_DIR"/log/usb_add_info
+                echo "$(date): Backup failed" >> "$LOG_DIR"/usb_add_info
         fi
 fi
 
