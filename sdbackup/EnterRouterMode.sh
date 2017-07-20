@@ -134,12 +134,16 @@ if [ $sdcard -eq 1 -a $storedrive -eq 1 ];then
         # Organize the photos in a folder for each SD card by UUID,
         target_dir="$store_mountpoint$PHOTO_DIR"/"$sd_uuid"
         mkdir -p $target_dir
-		mkdir -p "$STORE_DIR"/log
+        mkdir -p "$STORE_DIR"/log
         # Copy the files from the sd card to the target dir, 
         # Uses filename and size to check for duplicates
         echo "$(date): Copying SD card to $target_dir" >> "$STORE_DIR"/log/usb_add_info
-        rsync -vrm --size-only --log-file /tmp/rsync_log --exclude ".?*" "$SD_MOUNTPOINT"/DCIM/ "$target_dir"/DCIM/
-        rsync -vrm --size-only --log-file /tmp/rsync_log --exclude ".?*" "$SD_MOUNTPOINT"/PRIVATE/ "$target_dir"/PRIVATE/
+        rsync -vrm --size-only --log-file /tmp/rsync_log --exclude ".?*" \ 
+                "$SD_MOUNTPOINT"/DCIM \ 
+                "$SD_MOUNTPOINT"/PRIVATE \
+                "$SD_MOUNTPOINT"/MP_ROOT \
+                "$SD_MOUNTPOINT"/AVF_INFO \
+                "$target_dir"
 fi
 
 # If both a valid store drive and a matching backup drive are attached,
