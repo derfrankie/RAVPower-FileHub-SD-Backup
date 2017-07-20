@@ -65,7 +65,7 @@ STORE_DIR=/sdcopies
 BACKUP_DIR=/fotobackup
 PHOTO_DIR="$STORE_DIR"/fotos
 CONFIG_DIR="$STORE_DIR"/config
-MEDIA_REGEX=".*\.\(jpg\|gif\|png\|jpeg\|mov\|avi\|wav\|mp3\|aif\|wma\|wmv\|asx\|asf\|m4v\|mp4\|mpg\|3gp\|3g2\|crw\|cr2\|nef\|dng\|mdc\|orf\|sr2\|srf\|mts\|rw2\)"
+#MEDIA_REGEX=".*\.\(jpg\|gif\|png\|jpeg\|mov\|avi\|wav\|mp3\|aif\|wma\|wmv\|asx\|asf\|m4v\|mp4\|mpg\|3gp\|3g2\|crw\|cr2\|nef\|dng\|mdc\|orf\|sr2\|srf\|mts\|rw2\)"
 
 # Check if an SD card is inserted (always mounted at the same mount point on the Rav Filehub)
 check_sdcard() {
