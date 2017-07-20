@@ -9,4 +9,4 @@ rm -- "$0"
 # /sbin/shutdown h
 
 # Telnet
-/usr/sbin/telnetd &
+#/usr/sbin/telnetd &
