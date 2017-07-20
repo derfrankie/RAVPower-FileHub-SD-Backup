@@ -108,6 +108,7 @@ if [ $sdcard -eq 1 -a $storedrive -eq 1 ];then
         rsync -vrm --size-only --log-file $log_dir/rsync_log --exclude ".?*" \
                 $SD_MOUNTPOINT/DCIM \
                 $SD_MOUNTPOINT/PRIVATE \
+                $SD_MOUNTPOINT/MISC \
                 $SD_MOUNTPOINT/MP_ROOT \
                 $SD_MOUNTPOINT/AVF_INFO \
                 $target_dir >> "$log_dir"/rsync_stdout
